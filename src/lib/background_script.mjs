@@ -38,13 +38,22 @@ let openWindow = async () => {
 browser.menus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === 'log-selection') {
     console.info(info.selectionText);
+    closeWindow();
     openWindow().then(() => {
       showUebersetzung(info.selectionText.trim(), window);
     });
   }
 });
 
+const closeWindow = () => {
+  if(window != null) {
+    browser.windows.remove(window.id);
+    window = null;
+  }
+}
+
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  closeWindow();
   openWindow().then(() => {
     extensionMessageService.recieveText(request, sender, sendResponse, window);
   });
