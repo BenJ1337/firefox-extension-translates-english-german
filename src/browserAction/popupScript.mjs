@@ -9,16 +9,17 @@ const extSettingsService = new ExtSettingsService();
 const tabMessageService = new TabMessageService();
 const wordStorageService = new WordStorageService();
 
-var checkbox = document.querySelector('input[name=checkbox]');
-checkbox.addEventListener('change', function () {
-  extSettingsService.setStatusDoubleClick(this.checked);
+var checkbox = document.querySelector('input[name=translateWithDoubleClick]');
+checkbox.addEventListener('change', () => {
+  console.info(`${checkbox.checked}`);
+  extSettingsService.setStatusDoubleClick(checkbox.checked);
   let tab = browser.tabs.query({ currentWindow: true, active: true });
   tab.then(
     (tabs) => {
       if (tabs.length === 1) {
         tabMessageService.send2TabActiveDoubleClickListener(
           tabs[0],
-          this.checked
+          checkbox.checked
         );
       } else {
         console.error(`Es wurde nicht ein Tab gefunden: ${tabs.length}`);
@@ -91,3 +92,16 @@ exportBtn.addEventListener('click', function () {
   console.log('Export');
   exportTableToCSV(null, 'words');
 });
+
+var translatorSelect = document.querySelector('select[name=translatorSelection]');
+
+translatorSelect.addEventListener('change', (event) => {
+  switch(event.target.value) {
+    case 'google': 
+    extSettingsService.setTranslator('https://translate.google.com/?sl=en&tl=de&text='); 
+      break;
+    case 'linguee':
+      extSettingsService.setTranslator('https://www.linguee.de/deutsch-englisch/search?source=auto&query='); 
+      break;
+  }
+})

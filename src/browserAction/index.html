@@ -6,10 +6,19 @@
   </head>
   <body>
     <div style="width: 100%">
-      <label
-        ><input type="checkbox" name="checkbox" />
-        Übersetze bei Doppelklick
+    <div>
+      <label for="translatorSelection">
+        Translator
       </label>
+        <select id="translatorSelection" name="translatorSelection">
+          <option value="linguee">Linguee</option>
+          <option value="google" selected>Google Translate</option>
+        </select>
+    </div>
+    <div>
+      <label for="translateWithDoubleClick">Übersetze bei Doppelklick</label>
+      <input type="checkbox" id="translateWithDoubleClick" name="translateWithDoubleClick" />
+    </div>
     </div>
     <div style="width: 100%; padding: 10px 0">
       <button id="reset-list">Reset Words</button>

@@ -1,4 +1,5 @@
 import { WordStorageService } from '../storage/WordStorageService.mjs';
+import { ExtSettingsService } from '../storage/ExtSettingsService.mjs';
 
 async function createWindow(onCloseCallback) {
   let window = await browser.windows.create({
@@ -20,15 +21,16 @@ async function createWindow(onCloseCallback) {
 
 async function showUebersetzung(words, window) {
   new WordStorageService().appendWord(words);
+  const translator = await new ExtSettingsService().getTranslator();
   console.info('Aktualisiere Fenster mit Übersetzung...');
   console.log(`W-Id: ${window.id}`);
-
+  console.log(`Translator: ${translator}`)
   browser.tabs
     .query({ windowId: window.id, active: true })
     .then(
       (t) => {
         browser.tabs.update(t[0].id, {
-          url: `https://www.linguee.de/deutsch-englisch/search?source=auto&query=${words}`,
+          url: `${translator}${words}`
         });
       },
       (err) => console.error(err)

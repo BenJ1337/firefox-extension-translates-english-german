@@ -7,17 +7,17 @@
 
 ## Run the extension while developing
 
-    web-ext run
+    $ web-ext --no-config-discovery --config ./web-ext-config.mjs run
 
 ## Build the extension
 
-    web-ext build
+    $ web-ext build
 
 ## Signing the extension
 ### First Time
 When signing the extension for the first time and there is no id specified in the manifest.json, then the Tool web-ext will generate and print the fresh "Extension ID" into the console.
 
-    web-ext sign --api-key=<your-api-key> --api-secret=<your-secret>
+    $ web-ext sign --api-key=<your-api-key> --api-secret=<your-secret>
 
 Output
 
@@ -33,4 +33,4 @@ Output
 
 ### For Updates
 
-    web-ext sign --api-key=<your-api-key> --api-secret=<your-secret> --id=<your-id>
+    $ web-ext sign --api-key=<your-api-key> --api-secret=<your-secret> --id=<your-id>
